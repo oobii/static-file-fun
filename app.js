@@ -1,4 +1,5 @@
-// To run:  nodemon app.js
+// To run in shell:  nodemon app.js
+// Then in the browser go to http://localhost:3000/cool.txt
 
 var express = require("express")
 var path = require("path")
@@ -22,21 +23,28 @@ var logger = morgan("short")
 
 app.use(logger);
 
-app.use(function(req, res, next) {
-    var filePath = path.join(__dirname, "static", req.url);
-    fs.stat(filePath, function(err, fileInfo) {
-        if(err) {
-            next();
-            return;
-        }
-        if(fileInfo.isFile()) {
-            res.sendFile(filePath);
-        }
-        else {
-            next();
-        }
-    });
-});
+// app.use(function(req, res, next) {
+//     var filePath = path.join(__dirname, "static", req.url);
+//     fs.stat(filePath, function(err, fileInfo) {
+//         if(err) {
+//             next();
+//             return;
+//         }
+//         if(fileInfo.isFile()) {
+//             res.sendFile(filePath);
+//         }
+//         else {
+//             next();
+//         }
+//     });
+// });
+
+// The code below replaces file send
+// If the file exists at the path, it will send it. If not, it will call next and
+// continue on to the next middleware in the stack.
+var staticFilePath = path.join(__dirname, "static");
+app.use(express.static(staticFilePath));
+
 
 app.use(function(req, res) {
     res.status(404);
