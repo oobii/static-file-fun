@@ -1,0 +1,12 @@
+{
+  "name": "static-file-fun",
+  "private": true,
+  "scripts": {
+    "start": "nodemon app.js"
+  },
+  "version": "0.0.1",
+  "dependencies": {
+    "express": "^4.15.4",
+    "morgan": "^1.9.0"
+  }
+}
